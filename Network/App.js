@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import axios from "axios";
-import API from "../NetworkingRN/API";
+import API from "./API";
 import {
   StyleSheet,
   Text,
@@ -30,9 +30,7 @@ export default function App() {
 
   const fetchData = async (limit = 10) => {
     try {
-      const response = await API.get(
-        `/posts?_limit=${limit}`,
-      );
+      const response = await API.get(`/posts?_limit=${limit}`);
       // axios automatically parses JSON, use response.data
       setPostList(response.data);
       setIsLoading(false);
@@ -55,13 +53,10 @@ export default function App() {
   const addPost = async () => {
     setIsPosting(true);
     try {
-      const response = await API.post(
-        `/posts`,
-        {
-          title: postTitle,
-          body: postBody,
-        },
-      );
+      const response = await API.post(`/posts`, {
+        title: postTitle,
+        body: postBody,
+      });
 
       const newPost = response.data;
       setPostList([newPost, ...postList]);
